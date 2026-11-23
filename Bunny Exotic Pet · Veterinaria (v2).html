@@ -38,8 +38,16 @@ input,select,textarea{width:100%;padding:11px;border-radius:10px;border:1px soli
 #adm{display:none;background:var(--g2);border-top:3px solid var(--g)}#adm.on{display:block}
 footer{text-align:center;color:var(--mut);font-size:13px;padding:24px 16px 90px}
 @media(max-width:700px){.hero,.split,.two{grid-template-columns:1fr}.hero h1{font-size:30px}.gal{grid-template-columns:1fr}.gal img{min-height:0;aspect-ratio:4/3}}
+ .product-img {
+    width: 100%;
+    height: 170px;
+    object-fit: contain;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    background: var(--bg);
+}
 </style></head><body>
-<header><b>🐰 Bunny Exotic Pet</b>
+<header><b><a href="index.html"><img src="foto veterinaria.jpg" alt="Mi imagen"></a></b>
 <nav><a href="#servicios">Servicios</a><a href="#cita">Reservar</a><a href="#tienda">Tienda</a><a href="#ubicacion">Ubicación</a></nav>
 <a class="btn" href="#cita">Reservar cita</a></header>
 
@@ -85,13 +93,33 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:24px 16px 90px}
 
 <script>
 var S=[["🩺","Consultas",30],["💉","Vacunas",50],["💊","Desparasitación",10],["🐜","Antipulgas",35],["🦷","Profilaxis",250],["✂️","Castraciones",300],["🛁","Baños",30]];
-var P=[["🥕","Heno premium para conejos 1 kg",28],["💊","Vitaminas multivitamínico",35],["🐜","Antipulgas en pipeta",35],["🪱","Desparasitante en tabletas",18],["🐾","Alimento balanceado 2 kg",45],["🧴","Shampoo hipoalergénico",25],["🦴","Snacks y premios",12],["🛏️","Cama / accesorio",40]];
+var P = [
+    ["💊", "Vitaminas multivitamínico", 35, "vitaminas.jpg"],
+    ["🪱", "Desparasitante en tabletas", 18, "desparasitante.jpg"],
+    ["🛏️", "Cama / accesorio", 40, "cama.jpg"]
+];
 var cart={},db=null,user=null;
 function $(i){return document.getElementById(i)}
 function el(t,x,c){var e=document.createElement(t);if(x!=null)e.textContent=x;if(c)e.className=c;return e}
 $("serv").innerHTML=S.map(function(s){return '<div class="card sv"><div class="em">'+s[0]+'</div><div><b>'+s[1]+'</b><div class="price">S/ '+s[2]+'</div></div></div>'}).join("");
 $("ms").innerHTML=S.map(function(s){return '<option>'+s[1]+' (S/ '+s[2]+')</option>'}).join("");
-$("prod").innerHTML=P.map(function(p,i){return '<div class="card"><div style="font-size:34px">'+p[0]+'</div><div style="min-height:44px"><b>'+p[1]+'</b></div><div class="price">S/ '+p[2]+'</div><p style="margin:10px 0 0"><button onclick="add('+i+')">Agregar</button></p></div>'}).join("");
+$("prod").innerHTML = P.map(function(p, i) {
+    return `
+        <div class="card">
+            <img src="${p[3]}" alt="${p[1]}" class="product-img">
+
+            <div style="min-height:44px">
+                <b>${p[1]}</b>
+            </div>
+
+            <div class="price">S/ ${p[2]}</div>
+
+            <p style="margin:10px 0 0">
+                <button onclick="add(${i})">Agregar</button>
+            </p>
+        </div>
+    `;
+}).join("");
 var h="";for(var k=9;k<=20;k++){h+='<option>'+(k<10?"0":"")+k+':00</option>'}$("fh").innerHTML=h;
 $("fd").min=new Date().toISOString().slice(0,10);
 var myId=null;
